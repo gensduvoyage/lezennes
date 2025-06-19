@@ -1,5 +1,5 @@
 import {bodyParser, cors, Koa, Router} from '@vdegenne/koa';
-import {ArrayJSONDataFile} from '@vdegenne/server-helpers';
+import {ArrayJSONDataFile, checkFields} from '@vdegenne/server-helpers';
 const __dirname = import.meta.dirname;
 
 class DataStructure extends ArrayJSONDataFile<VoteWithIP> {
@@ -26,11 +26,29 @@ router.get('/api/my-ip', (ctx) => {
 	ctx.body = {ip: ctx.ip};
 });
 
-router.get('/api/can-vote', (ctx) => {
-	ctx.body = {canVote: data.getItemFromIP(ctx.ip)};
+// router.get('/api/can-vote', (ctx) => {
+// 	ctx.body = {canVote: data.getItemFromIP(ctx.ip)};
+// });
+
+router.get('/api/find-vote', (ctx) => {
+	ctx.body = {vote: data.getItemFromIP(ctx.ip)};
 });
 
-// router.post('/api/vote', bodyParser(), (ctx) => {});
+router.post('/api/vote', bodyParser(), (ctx) => {
+	const object = checkFields<VoteWithIP>({
+		ctx,
+		fields: fields as any,
+		requireds: ['type'],
+	});
+	const ip = ctx.ip;
+	if (!ip) {
+		ctx.throw("Couldn't register vote.");
+	}
+	object.IP = ip;
+	delete object.id; // Removing id if the user is kidding around.
+	data.push(object as VoteWithIP);
+	ctx.body = {} as any;
+});
 
 app.use(router.routes()).use(router.allowedMethods());
 

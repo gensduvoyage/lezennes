@@ -91,6 +91,6 @@
 	},
 	"dependencies": {
 		"@vdegenne/koa": "^0.1.3",
-		"@vdegenne/server-helpers": "^0.2.2"
+		"@vdegenne/server-helpers": "^0.2.3"
 	}
 }
