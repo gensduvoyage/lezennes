@@ -58,7 +58,7 @@ router.post('/api/vote', bodyParser(), (ctx) => {
 });
 
 router.get('/api/stats', (ctx) => {
-	ctx.body = data.getStats();
+	ctx.body = {stats: data.getStats()};
 });
 
 app.use(router.routes()).use(router.allowedMethods());
