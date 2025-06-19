@@ -6,6 +6,14 @@ class DataStructure extends ArrayJSONDataFile<VoteWithIP> {
 	getItemFromIP(IP: string) {
 		return this._data.find((item) => item.IP === IP);
 	}
+
+	getStats(): Stats {
+		return {
+			total: this._data.length,
+			pour: this._data.filter((i) => i.type === 'Pour').length,
+			contre: this._data.filter((i) => i.type === 'Contre').length,
+		};
+	}
 }
 
 const data = new DataStructure(`${__dirname}/../../data.json`, {
@@ -26,12 +34,12 @@ router.get('/api/my-ip', (ctx) => {
 	ctx.body = {ip: ctx.ip};
 });
 
-// router.get('/api/can-vote', (ctx) => {
-// 	ctx.body = {canVote: data.getItemFromIP(ctx.ip)};
-// });
-
 router.get('/api/find-vote', (ctx) => {
-	ctx.body = {vote: data.getItemFromIP(ctx.ip)};
+	const body: API_findVote = {
+		vote: data.getItemFromIP(ctx.ip),
+		stats: data.getStats(),
+	};
+	ctx.body = body;
 });
 
 router.post('/api/vote', bodyParser(), (ctx) => {
@@ -48,6 +56,10 @@ router.post('/api/vote', bodyParser(), (ctx) => {
 	delete object.id; // Removing id if the user is kidding around.
 	data.push(object as VoteWithIP);
 	ctx.body = {} as any;
+});
+
+router.get('/api/stats', (ctx) => {
+	ctx.body = data.getStats();
 });
 
 app.use(router.routes()).use(router.allowedMethods());
