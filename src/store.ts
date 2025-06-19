@@ -7,26 +7,26 @@ import {FormBuilder} from './forms/FormBuilder.js';
 
 @saveToLocalStorage('gensduvoyage:store')
 export class AppStore extends ReactiveController {
-	@state() voteType: VoteType | undefined = undefined;
+	@state() voteType: VoteType | null = null;
 	@state() remarks: string = '';
-	@state() voted = false;
+	@state() voted: boolean | null = null;
 
-	constructor() {
-		super();
-
-		API.findVote().then((vote) => {
-			if (vote) {
-				this.voted = true;
-				this.voteType = vote.type;
-				this.remarks = vote.remarks;
-			} else {
-				this.voted = false;
-			}
-		});
+	firstUpdated() {
+		if (this.voted === null) {
+			API.findVote().then((vote) => {
+				if (vote) {
+					this.voted = true;
+					this.voteType = vote.type;
+					this.remarks = vote.remarks;
+				} else {
+					this.voted = false;
+				}
+			});
+		}
 	}
 
 	canVote() {
-		const hash = window.location.hash;
+		const hash = window.location.hash.slice(1);
 		if (hash.length === 1) {
 			return false;
 		}
@@ -46,6 +46,8 @@ export class AppStore extends ReactiveController {
 			const {ok} = await API.vote({type: this.voteType, remarks: this.remarks});
 			if (ok) {
 				toast('Vote pris en compte, merci.');
+				store.voted = true;
+				window.location.hash = '#0';
 			}
 		} catch {
 			toast('Une erreur est survenue, veuillez réessayer plus tard...');

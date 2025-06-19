@@ -70,7 +70,7 @@ export class AppShell extends LitElement {
 					${F.TEXTAREA('Remarques', 'remarks', {rows: 6})}
 				</div>
 				<md-filled-button
-					?disabled=${!store.voteType && store.canVote()}
+					?disabled=${!store.voteType || !store.canVote()}
 					class="mb-20"
 					@click=${() => {
 						if (!store.canVote()) {
