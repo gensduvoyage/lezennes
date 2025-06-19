@@ -37,7 +37,6 @@ router.get('/api/my-ip', (ctx) => {
 router.get('/api/find-vote', (ctx) => {
 	const body: API_findVote = {
 		vote: data.getItemFromIP(ctx.ip),
-		stats: data.getStats(),
 	};
 	ctx.body = body;
 });

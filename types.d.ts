@@ -21,12 +21,14 @@ declare global {
 
 	type API_myIp = {ip: string};
 	// type API_canVote = {canVote: boolean};
-	type API_findVote = {vote: VoteWithIP | undefined; stats: Stats};
+	type API_findVote = {vote: VoteWithIP | undefined};
+	type API_stats = {stats: Stats};
 
 	interface ApiRoutes {
 		['my-ip']: API_myIp;
 		// ['can-vote']: API_canVote;
 		['find-vote']: API_findVote;
+		['stats']: API_stats;
 		['vote']: {};
 	}
 
