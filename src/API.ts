@@ -6,8 +6,13 @@ class AppAPI extends Rest<ApiRoutes> {
 		return (await json()).ip;
 	}
 
+	async findVote() {
+		const {json} = await this.get('find-vote');
+		return (await json()).vote;
+	}
+
 	vote(vote: Vote) {
-		this.post('vote', vote);
+		return this.post('vote', vote);
 	}
 }
 

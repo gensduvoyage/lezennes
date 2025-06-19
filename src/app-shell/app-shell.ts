@@ -2,9 +2,10 @@ import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
 import {customElement} from 'lit/decorators.js';
+import {voteTypes} from '../constants.js';
 import {F, store} from '../store.js';
 import styles from './app-shell.css?inline';
-import {voteTypes} from '../constants.js';
+import toast from 'toastit';
 
 declare global {
 	interface Window {
@@ -69,9 +70,15 @@ export class AppShell extends LitElement {
 					${F.TEXTAREA('Remarques', 'remarks', {rows: 6})}
 				</div>
 				<md-filled-button
-					?disabled=${!store.voteType}
+					?disabled=${!store.voteType && store.canVote()}
 					class="mb-20"
-					@click=${() => store.submit()}
+					@click=${() => {
+						if (!store.canVote()) {
+							toast("Can't vote.");
+							return;
+						}
+						store.submit();
+					}}
 					>Soumettre</md-filled-button
 				>
 			</div>

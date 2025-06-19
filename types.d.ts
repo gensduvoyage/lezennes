@@ -11,7 +11,7 @@ declare global {
 
 	type VoteType = 'Pour' | 'Contre';
 	interface Vote {
-		id: number;
+		id?: number;
 		type: VoteType;
 		remarks?: string;
 	}
