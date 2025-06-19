@@ -13,8 +13,8 @@ const data = new DataStructure(`${__dirname}/../../data.json`, {
 	force: true,
 });
 
-const fields = [] as const;
-// true as
+const fields = ['id', 'type', 'IP', 'remarks'] as const;
+true as AllKeysPresent<VoteWithIP, typeof fields>;
 
 const PORT = 41351;
 const app = new Koa();
