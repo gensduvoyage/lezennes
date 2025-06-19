@@ -11,6 +11,7 @@ declare global {
 
 	type VoteType = 'Pour' | 'Contre';
 	interface Vote {
+		id: number;
 		type: VoteType;
 		remarks?: string;
 	}
@@ -19,8 +20,8 @@ declare global {
 	}
 
 	interface ApiRoutes {
-		'my-ip': {ip: string};
-		vote: {};
+		['my-ip']: {ip: string};
+		['vote']: {};
 	}
 }
 
