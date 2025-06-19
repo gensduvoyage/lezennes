@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "ESNext",
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
+		"target": "esnext",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"useDefineForClassFields": false,
 		"experimentalDecorators": true,
 		"resolveJsonModule": true,

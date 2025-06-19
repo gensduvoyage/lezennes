@@ -13,7 +13,7 @@ export function confirm({
 	return function (
 		_target: any,
 		_propertyKey: string,
-		descriptor: PropertyDescriptor
+		descriptor: PropertyDescriptor,
 	) {
 		import('./material/dialog-patch.js');
 		const originalMethod = descriptor.value;
@@ -23,6 +23,8 @@ export function confirm({
 				await materialConfirm({
 					headline,
 					content,
+					cancelButton: {label: 'Annuler'},
+					confirmButton: {label: 'Soumettre', buttonType: 'md-filled-button'},
 				});
 			} catch {
 				return;

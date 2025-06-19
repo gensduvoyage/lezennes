@@ -1,13 +1,14 @@
 import {Rest} from '@vdegenne/mini-rest';
 
-class AppAPI extends Rest {
+class AppAPI extends Rest<ApiRoutes> {
 	async myIP() {
-		const {json} = await this.get('my-ip', 'json');
-		return json.ip;
+		const {json} = await this.get('my-ip');
+		return (await json()).ip;
 	}
 
 	vote(vote: Vote) {
-		this.post();
+		this.post('vote', vote);
 	}
 }
-export const API = new AppAPI('http://54.36.99.179:41351/api');
+
+export const API = new AppAPI('https://vdegenne.com:41352/api');

@@ -16,7 +16,7 @@
 		"@vdegenne/about-dialog": "^0.4.2",
 		"@vdegenne/debouncer": "^1.0.3",
 		"@vdegenne/material-color-helpers": "^1.11.1",
-		"@vdegenne/mini-rest": "^0.2.1",
+		"@vdegenne/mini-rest": "file:../mini-rest",
 		"@vdegenne/rollup-plugin-minify-html": "^1.0.6",
 		"custom-element-decorator": "^0.6.0",
 		"html-vision": "^0.3.2",
